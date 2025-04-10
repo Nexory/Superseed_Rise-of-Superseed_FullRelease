@@ -1,6 +1,11 @@
 # Rise of Superseed: Real-Time Conquest 🌱
 
 **A strategic, seed-fueled RTS where you defend Ethara from chaos! Built with grit and glory.**
+Made for *Superseed Tesla Competition* by *Nexory*  
+Twitter: [@Nexory96](https://twitter.com/Nexory96) • Discord: nexory  
+*Play online:* [nexory96.itch.io/rise-of-superseed](https://nexory96.itch.io/rise-of-superseed)  
+*GitHub Repo:* [github.com/Nexory/Superseed_Rise-of-Superseed_FullRelease](https://github.com/Nexory/Superseed_Rise-of-Superseed_FullRelease)
+
 
 ---
 
@@ -94,7 +99,7 @@ Deploy these heroes to fight for Ethara:
 1.  **Download/Clone:**  
     *   Grab the ZIP or clone it:  
         ```bash
-        git clone https://github.com/yourusername/rise-of-superseed
+        git clone https://github.com/Nexory/Superseed_Rise-of-Superseed_FullRelease/
         ```
 2.  **Navigate to Folder:**  
     *   Open terminal, then:  
