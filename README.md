@@ -1,6 +1,7 @@
 # Rise of Superseed: Real-Time Conquest 🌱
 
 **A strategic, seed-fueled RTS where you defend Ethara from chaos! Built with grit and glory.**
+
 Made for *Superseed Tesla Competition* by *Nexory*  
 Twitter: [@Nexory96](https://twitter.com/Nexory96) • Discord: nexory  
 *Play online:* [nexory96.itch.io/rise-of-superseed](https://nexory96.itch.io/rise-of-superseed)  
