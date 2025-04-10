@@ -1,52 +1,134 @@
-Made for Superseed Tesla competition by Nexory
-@Nexory96 / Discord: nexory
+# Rise of Superseed: Real-Time Conquest 🌱
 
-"Rise of Superseed" is a real-time strategy game set in the embattled realm of Ethara, where players muster an army to safeguard their base and raze the enemy’s across 25 progressively tougher levels. Using seeds earned from fallen enemies and passive income linked to locked superseeds, players deploy units—from nimble Peasants to hulking Tanks—that automatically engage waves of Bandits, Zombies, and Undead. Units vary in stats like health (e.g., Peasant: 100, Tank: 300), attack power (e.g., Archer: 20, Warrior: 25), and range (e.g., Melee: 135, Mage: 350). Seeds spawn units (e.g., Peasant: 10, Tank: 60), while superseeds, won from victories, fund upgrades for units (e.g., +25 health) and bases (e.g., +75 HP per level, up to 2500+). Progress persists via a robust savegame system: locally, it writes to player_data.json, and on the web (via Pygbag), it leverages localStorage, preserving superseeds, max level, upgrades, and unlocked units across sessions.
-Narrated by David, the story traces Ethara’s rising threats: Bandits rule early levels, with the Bandit King (600 HP, 35 attack) yielding at 25% health in Level 5, granting Archers. Zombies overrun from Level 6, and Undead emerge at Level 16, leading to a climactic battle with the Undead King (700 HP, 40 attack) in Level 25. Towers unlock at Level 6, pitting upgradable Player Tower Archers against enemy Zombie Archers or Undead Mages. With 25 achievements (e.g., "Beat Level 10", "Kill 100 Units"), a sleek UI featuring unit buttons and resource displays, and vivid visuals—animated sprites (14 frames per state) and faction-specific backgrounds—complemented by audio (e.g., bowshot.ogg, toggleable music), the game weaves strategy, resource management, and narrative into a compelling package, enhanced by seamless save functionality for both desktop and web play.
-Key Game Aspects by Section (Bullet Points)
-Gameplay Overview
-Core mechanic: Spawn units with seeds to defend your base and destroy the enemy’s in real-time combat.
+**A strategic, seed-fueled RTS where you defend Ethara from chaos! Built with grit and glory.**
 
-Units: 5 player types (Peasant, Spearman, Archer, Warrior, Tank) with auto-fighting AI.
+---
 
-Combat stats: Health (e.g., Peasant: 100, Tank: 300), Attack (e.g., Archer: 20), Speed (e.g., Razor: 2.5), Range (e.g., Melee: 135, Archer: 300).
+## 🎮 Game Overview
 
-Resources
-Seeds: Gained from kills and passive income (e.g., 84 seeds/sec at 2600 locked superseeds), spent on units (e.g., Tank: 60).
+In the war-torn land of **Ethara**, you’re tasked with building an army to protect your base and crush the enemy’s across 25 grueling levels. Once peaceful, Ethara now faces **Bandits**, **Zombies**, and **Undead**, and it’s up to you to reclaim it. Harvest **seeds** from fallen foes, deploy units like **Peasants** and **Tanks**, and use **superseeds** to upgrade your forces—all while racing against relentless waves.
 
-Superseeds: Earned via level wins, used for upgrades, boost passive income when locked (e.g., 0.9 seeds/frame at 1600 locked).
+Narrated by **David**, the story unfolds as you battle escalating threats. From the **Bandit King’s** surrender to the **Undead’s** final stand, every level tests your strategy. With saves via `player_data.json` (local) or **localStorage** (web), your progress endures. Can you rise to the top?
 
-Bases: Player base starts at 1000 HP (upgradable to 2500+), enemy base scales per level (e.g., 1400 HP at Level 5).
+---
 
-Levels and Progression
-Levels: 25 total, split across 3 enemy factions.
+## 🔥 Core Features
 
-Factions: Bandits (Levels 1-5), Zombies (Levels 6-15), Undead (Levels 16-25).
+*   **25 Levels of War:** Fight through rising difficulty across Bandits, Zombies, and Undead factions.
+*   **5 Unit Types:** Command Peasants, Spearmen, Archers, Warriors, and Tanks—each with auto-combat AI and scaling stats (health, attack, speed, range).
+*   **Dynamic Factions & Towers:** Face roaming enemies, with towers unlocking at Level 6 (Player Tower vs. enemy counterparts).
+*   **Resource Management:**
+    *   **Seeds:** Earned from kills + passive income (e.g., 84/sec at 2600 locked superseeds), spent on units.
+    *   **Superseeds:** Won from victories, fuel upgrades and boost income when locked.
+*   **Upgrade Systems:**
+    *   **Units:** Boost health, damage, speed, attack rate (max 20 levels).
+    *   **Base:** Enhance HP and tower power (max 20 levels).
+*   **Savegame System:** Local saves to `player_data.json`, web saves via **localStorage**—tracks superseeds, levels, upgrades.
+*   **Achievements:** Unlock 25 goals (e.g., "Kill 100 Units") with pop-up rewards.
+*   **UI & Style:** Unit buttons, resource trackers, animated sprites, faction-themed backgrounds, sword-clash SFX, and toggleable music.
 
-Unlocks: Archer at Level 5 (Bandit King surrender), Tank at Level 10 (prison break).
+---
 
-Upgrades
-Unit upgrades: Health (+25), Damage (+5), Attack Speed (+0.075), Speed (+0.2), max 20 levels (e.g., Peasant Health: 10 superseeds).
+## 👾 Choose Your Units
 
-Base upgrades: Base HP (+75/level), Tower stats (Attack +5, Range +50, Speed +0.075), max 20 levels.
+Deploy these heroes to fight for Ethara:
 
-Story and Events
-Narrator: David guides the story of Ethara’s liberation.
+1.  🌾 **Peasant:** The humble starter.  
+    *   *Cost:* 10 seeds  
+2.  ⚔️ **Spearman:** Melee brawler.  
+    *   *Cost:* Scales with upgrades  
+3.  🏹 **Archer:** Ranged striker (unlocks Level 5).  
+    *   *Cost:* Scales with upgrades  
+4.  🛡️ **Warrior:** Tough frontline grunt.  
+    *   *Cost:* Scales with upgrades  
+5.  💪 **Tank:** Heavy-hitting beast (unlocks Level 10).  
+    *   *Cost:* 60 seeds  
 
-Key events: Bandit King surrenders at Level 5 (600 HP), Zombies rise at Level 6, Undead King falls at Level 25 (700 HP).
+---
 
-Features
-Achievements: 25 goals (e.g., "Max Upgrade a Unit") with pop-up notifications.
+## ☠️ Know Your Enemies
 
-Towers: Unlock at Level 6—Player Tower Archer (400 range, upgradable) vs. Zombie Archer or Undead Mage.
+*   **Bandits:** Early-game rogues, beaten by Level 5.  
+*   **Zombies:** Mid-game swarmers, starting Level 6.  
+*   **Undead:** Late-game arcane terrors, ruling until Level 25.  
 
-Savegame: Local play saves to player_data.json; web play (Pygbag) uses localStorage for progress (superseeds, levels, upgrades).
+---
 
-UI
-Interface: Unit spawn buttons, seeds/superseeds/XP display, pause menu, and upgrade screens.
+## 🌍 The Battlefields (Levels 1-25)
 
-Visuals and Audio
-Visuals: Animated sprites (idle, run, attack, die; 14 frames each), faction-themed backgrounds (e.g., battlefield_zombies.png).
+1.  **Bandit Lands (1-5):** Rough start, Archer unlock.  
+2.  **Zombie Wastes (6-15):** Towers rise, Tank joins.  
+3.  **Undead Realm (16-25):** Final gauntlet to victory.  
 
-Audio: Sound effects (e.g., melee_sword.ogg), toggleable music via mouse click.
+---
 
+## 🛒 Upgrades & Resources
+
+*   **Seeds 🌱:** Core currency from kills and income.  
+    *   **Units:** Peasant (10), Tank (60), etc.  
+*   **Superseeds ⭐:** Victory spoils for upgrades.  
+    *   **Unit Boosts:** Health, damage, speed, attack rate.  
+    *   **Base Buffs:** HP and tower strength.  
+
+---
+
+## 📖 Story & Achievements
+
+*   **Story:** David narrates Ethara’s fall and rise—Bandit King yields at Level 5, Zombies swarm at 6, Undead reign until 25.  
+*   **Achievements:** 25 tiers (e.g., "Beat Level 10") with in-game pop-ups.  
+
+---
+
+## ⌨️ Controls
+
+*   **Spawn Units:** Click UI buttons  
+*   **Pause/Resume:** P  
+*   **Upgrades:** Menu clicks  
+*   **Toggle Music:** Mouse click  
+*   **Quit:** Escape  
+
+---
+
+## 🚀 How to Play
+
+1.  **Download/Clone:**  
+    *   Grab the ZIP or clone it:  
+        ```bash
+        git clone https://github.com/yourusername/rise-of-superseed
+        ```
+2.  **Navigate to Folder:**  
+    *   Open terminal, then:  
+        ```bash
+        cd rise-of-superseed
+        ```
+3.  **Install Requirements:**  
+    *   With env active:  
+        ```bash
+        pip install pygame
+        ```
+4.  **Run the Game:**  
+    *   Launch it:  
+        ```bash
+        python main.py
+        ```
+5.  **Enjoy!** Build, fight, conquer.  
+
+---
+
+## 🏆 Project Purpose
+
+Built for Superseed Contest!
+
+---
+
+## 📜 License
+
+Licensed under the **MIT License**.
+
+---
+
+## 👥 Credits
+
+Developed by **Nexory**  
+
+🌱 **Rise up, defend Ethara, and share your victories! Good luck, commander!** ⭐  
