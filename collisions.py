@@ -61,7 +61,7 @@ def check_player_collisions(unit, buckets, bucket_size, enemy_base):
         return new_x, new_state, target
     
     # If no target in range, proceed with movement and collision checks
-    new_x = unit.x + unit.speed * unit.direction
+    new_x = unit.x + (unit.speed + 1) * unit.direction
     unit_rect = pygame.Rect(new_x + 3, unit.y, 120, 192)  # Offset as in V2.29
     bucket_x = int(new_x // bucket_size)
     check_buckets = [bucket_x - 1, bucket_x, bucket_x + 1]
@@ -132,7 +132,7 @@ def check_enemy_collisions(unit, buckets, bucket_size, player_base):
                 new_x = max(target_x, unit.x - unit.speed)
         return new_x, "attack", target
     
-    new_x = unit.x + unit.speed * unit.direction
+    new_x = unit.x + (unit.speed + 1) * unit.direction
     unit_rect = pygame.Rect(new_x + 3, unit.y, 120, 192)
     if unit_rect.colliderect(player_base.get_rect()):
         new_x = player_base.get_rect().left  # x=125

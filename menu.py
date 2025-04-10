@@ -146,7 +146,7 @@ class MainMenu:
             self.background = pygame.image.load("assets/backgrounds/menu_background.png").convert()
             self.background = pygame.transform.scale(self.background, (1920, 1080))
         except Exception as e:
-            js.console.log(f"Failed to load menu background: {e}")
+            print(f"Failed to load menu background: {e}")
             self.background = pygame.Surface((1920, 1080))
             self.background.fill((14, 39, 59))
         
@@ -254,7 +254,7 @@ class MainMenu:
             self.unit_button_bg = pygame.image.load("assets/ui/ui_buybuttons.png").convert_alpha()
             self.text_bg = pygame.image.load("assets/ui/ui_text.png").convert_alpha()
         except Exception as e:
-            js.console.log(f"Failed to load menu assets: {e}")
+            print(f"Failed to load menu assets: {e}")
             self.click_sound = None
             self.back_sound = None
             self.button_bg = pygame.Surface((100, 30))
@@ -527,6 +527,8 @@ class MainMenu:
                     self.volume_handle.x = max(self.volume_slider.x, min(mouse_x - 10, self.volume_slider.x + self.volume_slider.width - 20))
                     self.volume = (self.volume_handle.x - self.volume_slider.x) / (self.volume_slider.width - 20)
                     pygame.mixer.music.set_volume(self.volume * 0.5)
+                    for i in range(pygame.mixer.get_num_channels()):
+                        pygame.mixer.Channel(i).set_volume(self.volume)  # SFX volume (0.0 to 1.0)
                     self.save_player_data()
                     return None
             
@@ -659,9 +661,9 @@ class MainMenu:
             visible_height = 1080 - 150
             max_scroll = total_height - visible_height
             self.scroll_y = max(min(self.scroll_y, 0), -max_scroll)
-            js.console.log(f"Scroll event: scroll_y = {self.scroll_y}")
+            print(f"Scroll event: scroll_y = {self.scroll_y}")
             if IS_Pygbag:
-                js.console.log(f"Scroll event: {self.scroll_y}")
+                print(f"Scroll event: {self.scroll_y}")
         
         return None
             
@@ -699,7 +701,7 @@ class MainMenu:
             FONT_TITLE = pygame.font.Font("assets/fonts/OpenSans-Bold.ttf", 60)  # Larger font for title
             FONT_BODY = pygame.font.Font("assets/fonts/OpenSans-Regular.ttf", 25)
         except Exception as e:
-            js.console.log(f"Failed to load fonts in MainMenu: {e}")
+            print(f"Failed to load fonts in MainMenu: {e}")
             FONT_CTA = pygame.font.SysFont("Open Sans", 40, bold=True)
             FONT_TITLE = pygame.font.SysFont("Open Sans", 60, bold=True)
             FONT_BODY = pygame.font.SysFont("Open Sans", 25)

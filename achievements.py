@@ -101,10 +101,10 @@ class Achievements:
             self.base_health_lost = False
         elif event == "seeds_collected":
             self.seeds_collected += data["seeds"]
-            # Convert to Superseeds immediately (1 Superseed per 100 seeds)
+            # Convert to Superseeds immediately
             new_superseeds = self.seeds_collected // 25
             self.total_seeds += new_superseeds  # total_seeds now tracks Superseeds
-            self.seeds_collected %= 100  # Keep remainder as in-game seeds
+            self.seeds_collected %= 25  # Keep remainder as in-game seeds
             if self.total_seeds >= 100:
                 self.unlock_achievement("Secure 100 Seeds")
             if self.total_seeds >= 1000:

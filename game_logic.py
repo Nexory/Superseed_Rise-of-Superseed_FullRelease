@@ -19,7 +19,7 @@ class SeedDrop:
         self.target_y = self.start_y + 50  # Drop 100px down from start
         self.value = value
         self.creation_time = pygame.time.get_ticks()
-        self.lifetime = 5000
+        self.lifetime = 2500
         self.alpha = 255
         self.drop_speed = 3.0  # Pixels per frame (adjustable)
         self.x_speed = random.uniform(-2.5, 2.5)  # Random horizontal spread, -1.5 to +1.5 px/frame
@@ -266,9 +266,7 @@ class Game:
 
         orig_width, orig_height = self.enemy_base.sprite.get_size()
         self.enemy_base.sprite = pygame.transform.scale(self.enemy_base.sprite, (int(orig_width * 0.52), int(orig_height * 0.52)))
-        # Debug log for enemy base right rect
-        print(f"Enemy base left rect: {self.enemy_base.get_rect().left}px")
-        
+
         # Enemy second base (visual only)
         self.enemy_base_2 = VisualBase(x=1470, y=495,
                                        sprite_path=enemy_base_path)
@@ -387,7 +385,6 @@ class Game:
             
             self.units.append(new_unit)
             self.main_menu.achievements.check_achievements("unit_spawned", {"unit": new_unit})
-            print(f"Spawned {unit_type.__name__}: Health={new_unit.max_health:.1f}, Damage={new_unit.attack_power:.1f}, Speed={new_unit.speed:.1f}, Attack Cooldown={new_unit.attack_cooldown}")
             return new_unit
 
     def spawn_enemy_unit(self):
@@ -530,11 +527,9 @@ class Game:
         
         for tower in self.player_towers + self.enemy_towers:
             if not self.game_over and not self.is_paused_by_event():
-                print(f"Updating {tower.__class__.__name__} at x={tower.x}")
                 tower.move(all_units, self.enemy_base, self.player_base, buckets, self.BUCKET_SIZE)
                 arrow = tower.update()  # Capture the arrow
                 if arrow:
-                    print(f"Adding arrow from {tower.__class__.__name__} at x={tower.x}")
                     self.arrows.append(arrow)
 
         if self.cart and self.cart.moving:
@@ -553,7 +548,6 @@ class Game:
         if (self.bandit_king and not self.surrender_triggered and 
             self.level.level_number == 5 and self.main_menu.max_level <= 5):
             current_health_percentage = self.bandit_king.health / self.bandit_king.max_health
-            print(f"Bandit King health check: {self.bandit_king.health}/{self.bandit_king.max_health} = {current_health_percentage*100:.1f}%")
             if current_health_percentage < 0.25:
                 self.show_bandit_surrender = True
                 self.event_handler.current_text = self.story.get_event_story("bandit_surrender")
@@ -565,8 +559,6 @@ class Game:
                         unit.state = "idle"
                         unit.is_attacking = False
                         unit.attack_target = None
-                print(f"Bandit King health at {current_health_percentage*100:.1f}%, surrender triggered")
-
         self.event_handler.handle_units_moving_back()
         self.event_handler.handle_king_moving()
 
@@ -638,7 +630,6 @@ class Game:
             for _ in range(seeds_gained):
                 seed_drop = SeedDrop(enemy.x, enemy.y, 1)
                 self.seed_drops.append(SeedDrop(enemy.x, enemy.y, 1))
-                print(f"Spawned SeedDrop at ({seed_drop.x:.1f}, {seed_drop.y}) from {enemy.name} at ({enemy.x}, {enemy.y})")
             self.main_menu.achievements.check_achievements("unit_killed", {"unit": enemy, "killer": "Player"})
             self.main_menu.achievements.check_achievements("seeds_collected", {"seeds": seeds_gained})
         self.enemy_units[:] = [enemy for enemy in self.enemy_units if enemy not in dead_enemies]
@@ -649,7 +640,7 @@ class Game:
         self.arrows[:] = [arrow for arrow in self.arrows if not arrow.update(all_units)]
 
         now = pygame.time.get_ticks()
-        if not self.enemy_spawns_stopped and now - self.last_enemy_spawn >= 5000:
+        if not self.enemy_spawns_stopped and now - self.last_enemy_spawn >= 10000:
             self.spawn_enemy_unit()
             self.last_enemy_spawn = now
 
@@ -667,7 +658,6 @@ class Game:
                         enemy.health = 0
                         enemy.state = "die"
                         enemy.frame = 0
-                        print(f"Killed enemy unit {enemy.__class__.__name__} at x={enemy.x}")
                 self.spawn_bandit_king()
                 self.bandit_king_spawned = True
                 print("Level 5: Spawning Bandit King")
@@ -743,6 +733,7 @@ class Game:
                 self.event_handler.handle_events(event)
                 if self.game_over and self.fade_alpha >= 255 and self.return_button.collidepoint(mouse_x, mouse_y):
                     self.seeds = 0
+                    self.main_menu.save_player_data()  # Ensure save after sync
                     return "menu"
                 elif self.menu_button.collidepoint(mouse_x, mouse_y) and not self.game_over:
                     self.menu_open = not self.menu_open
@@ -772,19 +763,13 @@ class Game:
                                     pygame.quit()
                                     sys.exit()
                 elif not self.game_over and not self.units_moving_back and not self.king_moving:
-                    for unit in self.units:
-                        if unit.get_rect().collidepoint(mouse_x, mouse_y):
-                            self.selected_unit = unit
-                            print(f"Selected {unit.name} at x={unit.x}")
-                            break
-                    else:
-                        result = self.ui.handle_event(event)
-                        if result:
-                            self.spawn_unit(result)
-                        if self.main_menu.active:
-                            upgrade = self.main_menu.handle_event(event)
-                            if upgrade and self.selected_unit:
-                                self.apply_upgrade(self.selected_unit, upgrade)
+                    result = self.ui.handle_event(event)
+                    if result:
+                        self.spawn_unit(result)
+                    if self.main_menu.active:
+                        upgrade = self.main_menu.handle_event(event)
+                        if upgrade and self.selected_unit:
+                            self.apply_upgrade(self.selected_unit, upgrade)
         return None
 
     def draw(self, screen):

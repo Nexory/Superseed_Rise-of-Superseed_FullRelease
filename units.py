@@ -136,7 +136,6 @@ class Unit:
         self.last_update = now
 
         if self.state not in self.animations or not self.animations[self.state]:
-            print(f"{self.name} resetting to idle: no valid animation for state {self.state}")
             self.state = "idle"
             self.frame = 0
             return None
@@ -152,7 +151,6 @@ class Unit:
                     arrow_start_x = self.x + (int(115 * self.scale_factor) if self.direction == 1 else int(59 * self.scale_factor))
                     arrow_start_y = self.y + int(105 * self.scale_factor)
                     if hasattr(self.attack_target, 'state') or hasattr(self.attack_target, 'health'):
-                        print(f"{self.name} firing arrow at {self.attack_target.name if hasattr(self.attack_target, 'name') else 'base'}")
                         return Arrow(arrow_start_x, arrow_start_y, self.direction, self.attack_target, self.attack_power)
                 elif isinstance(self, Undead_Mage):
                     ball_start_x = self.x - int(500 * self.scale_factor)
@@ -163,10 +161,8 @@ class Unit:
                 else:  # Melee units
                     if hasattr(self.attack_target, 'state') and self.attack_target.state != "die":
                         self.attack_target.take_damage(self.attack_power)
-                        print(f"{self.name} dealt {self.attack_power} damage to {self.attack_target.name}")
                     elif hasattr(self.attack_target, 'health') and self.attack_target.health > 0:
                         self.attack_target.take_damage(self.attack_power)
-                        print(f"{self.name} dealt {self.attack_power} damage to base")
             if self.frame > max_frame:
                 self.frame = 0  # Loop attack animation
                 if not self.attack_target or (hasattr(self.attack_target, 'state') and self.attack_target.state == "die") or \
@@ -305,7 +301,6 @@ class Arrow:
                 if (hasattr(self.target, 'state') and self.target.state != "die") or \
                    (hasattr(self.target, 'health') and self.target.health > 0):
                     self.target.take_damage(self.damage)
-                    print(f"Arrow hit {self.target.name if hasattr(self.target, 'name') else 'base'} for {self.damage} damage")
                 self.active = False
                 return True
         return False
@@ -445,7 +440,7 @@ class Player_PeasantUnit(Unit):
     name = "Player_Peasant"
     cost = 10
     base_health = 100
-    base_attack = 10
+    base_attack = 20
     base_speed = 2
     attack_range = 135
     base_attack_cooldown = 1000
@@ -462,7 +457,7 @@ class Player_SpearmanUnit(Unit):
     name = "Player_Spearman"
     cost = 20
     base_health = 120
-    base_attack = 15
+    base_attack = 25
     base_speed = 1.8
     attack_range = 150
     base_attack_cooldown = 1100
@@ -478,7 +473,7 @@ class Player_SpearmanUnit(Unit):
 class Player_ArcherUnit(Unit):
     name = "Player_Archer"
     base_health = 70
-    base_attack = 15
+    base_attack = 25
     base_speed = 1.5
     base_attack_cooldown = 1500
     cost = 25
@@ -496,7 +491,7 @@ class Player_WarriorUnit(Unit):
     name = "Player_Warrior"
     cost = 30
     base_health = 150
-    base_attack = 20
+    base_attack = 30
     base_speed = 1.8 
     attack_range = 135
     base_attack_cooldown = 1200
@@ -513,7 +508,7 @@ class Player_TankUnit(Unit):
     name = "Player_Tank"
     cost = 60
     base_health = 300
-    base_attack = 25
+    base_attack = 35
     base_speed = 1.2
     attack_range = 135
     base_attack_cooldown = 2000
@@ -529,7 +524,7 @@ class Player_TankUnit(Unit):
 # Bandits
 class Bandit_Razor(Unit):
     name = "Bandit_Razor"
-    base_health = 80
+    base_health = 70
     base_attack = 12
     base_speed = 2.5
     attack_range = 135
@@ -545,7 +540,7 @@ class Bandit_Razor(Unit):
 
 class Bandit_Madman(Unit):
     name = "Bandit_Madman"
-    base_health = 100
+    base_health = 90
     base_attack = 10
     base_speed = 2
     attack_range = 135
@@ -577,7 +572,7 @@ class Bandit_Archer(Unit):
 
 class Bandit_Tank(Unit):
     name = "Bandit_Tank"
-    base_health = 250
+    base_health = 225
     base_attack = 20
     base_speed = 1.0
     attack_range = 135
@@ -606,59 +601,11 @@ class Bandit_King(Unit):
             self.attack_sound = pygame.mixer.Sound("assets/sounds/Units/melee_sword.ogg")
         except Exception as e:
             print(f"Failed to load melee_sword.ogg for {self.name}: {e}")
-
-class Zombie_Archer(Unit):
-    name = "Zombie_Archer"
-    base_health = 45    # Was 30, now 30 * 1.5
-    base_attack = 22.5  # Was 15, now 15 * 1.5
-    base_speed = 2.1    # Was 1.4, now 1.4 * 1.5
-    attack_range = 250
-    base_attack_cooldown = 1000
-    scale_factor = 0.75
-
-    def __init__(self, faction, x):
-        super().__init__(faction, x)
-        try:
-            self.attack_sound = pygame.mixer.Sound("assets/sounds/Units/bowshot.ogg")
-        except Exception as e:
-            print(f"Failed to load melee_sword.ogg for {self.name}: {e}")
-
-class Zombie_Assassin(Unit):
-    name = "Zombie_Assassin"
-    base_health = 30    # Was 20, now 20 * 1.5
-    base_attack = 15    # Was 10, now 10 * 1.5
-    base_speed = 3.0    # Was 2, now 2 * 1.5
-    attack_range = 135
-    base_attack_cooldown = 1000
-    scale_factor = 0.75
-
-    def __init__(self, faction, x):
-        super().__init__(faction, x)
-        try:
-            self.attack_sound = pygame.mixer.Sound("assets/sounds/Units/melee_sword.ogg")
-        except Exception as e:
-            print(f"Failed to load melee_sword.ogg for {self.name}: {e}")
-
-class Zombie_Farmer(Unit):
-    name = "Zombie_Farmer"
-    base_health = 22.5  # Was 15, now 15 * 1.5
-    base_attack = 4.5   # Was 3, now 3 * 1.5
-    base_speed = 2.25   # Was 1.5, now 1.5 * 1.5
-    attack_range = 135
-    base_attack_cooldown = 1000
-    scale_factor = 0.75
-
-    def __init__(self, faction, x):
-        super().__init__(faction, x)
-        try:
-            self.attack_sound = pygame.mixer.Sound("assets/sounds/Units/melee_fist.ogg")
-        except Exception as e:
-            print(f"Failed to load melee_fist.ogg for {self.name}: {e}")
-
+           
 #Zombies
 class Zombie_Melee(Unit):
     name = "Zombie_Melee"
-    base_health = 90
+    base_health = 80
     base_attack = 10
     base_speed = 1.8
     attack_range = 135
@@ -674,7 +621,7 @@ class Zombie_Melee(Unit):
 
 class Zombie_Archer(Unit):
     name = "Zombie_Archer"
-    base_health = 60
+    base_health = 70
     base_attack = 12
     base_speed = 1.2
     attack_range = 250
@@ -916,14 +863,11 @@ class ZombieTowerArcher(Zombie_Archer):
         self.base_attack = 15  # Retaining Zombie_Archer’s base attack (scaled appropriately)
         self.is_tower = True
         self.attack_power = self.base_attack
-        print(f"ZombieTowerArcher initialized: attack_power={self.attack_power}")
 
     def move(self, all_units, enemy_base, player_base, buckets, bucket_size):
         _, new_state, target = check_enemy_collisions(self, buckets, bucket_size, player_base)  # Enemy faction targets player base
-        print(f"ZombieTowerArcher at x={self.x}: new_state={new_state}, target={target.__class__.__name__ if target else None}")
         self.state = new_state if new_state == "attack" else "idle"
         if target:
-            print(f"ZombieTowerArcher attacking target at x={target.x}, distance={abs(target.x - self.x)}")
             self.attack(target)
 
     def update(self):
@@ -954,14 +898,11 @@ class UndeadTowerMage(Undead_Mage):
         self.base_attack = 25  # Retaining Undead_Mage’s base attack
         self.is_tower = True
         self.attack_power = self.base_attack
-        print(f"UndeadTowerMage initialized: attack_power={self.attack_power}")
 
     def move(self, all_units, enemy_base, player_base, buckets, bucket_size):
         _, new_state, target = check_enemy_collisions(self, buckets, bucket_size, player_base)  # Enemy faction targets player base
-        print(f"UndeadTowerMage at x={self.x}: new_state={new_state}, target={target.__class__.__name__ if target else None}")
         self.state = new_state if new_state == "attack" else "idle"
         if target:
-            print(f"UndeadTowerMage attacking target at x={target.x}, distance={abs(target.x - self.x)}")
             self.attack(target)
 
     def update(self):

@@ -23,7 +23,6 @@ class Base:
 
     def take_damage(self, damage):
         self.health -= damage
-        print(f"{'Player' if self.is_player else 'Enemy'} Base took {damage} damage, health now {self.health}/{self.max_health}")
         if self.health <= 0:
             destroyed_path = self.sprite_path.replace(".png", "_destroyed.png")
             try:
