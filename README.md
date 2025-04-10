@@ -117,7 +117,7 @@ Deploy these heroes to fight for Ethara:
         ```
 3.  **Install Requirements:**
     *   ```bash
-        pip install pygame
+        pip install pygame-ce
         ```
     *   If pip fails, try pip3 install pygame-ce or python -m pip install pygame-ce.
 5.  **Run the Game:**  
