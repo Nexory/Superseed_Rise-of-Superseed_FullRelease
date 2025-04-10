@@ -97,6 +97,14 @@ Deploy these heroes to fight for Ethara:
 
 ## 🚀 How to Play
 
+**Requirements:**  
+*   Python Version 3.8 or higher - https://www.python.org/downloads/
+*   Pygame (May require pip)
+   * Run: python -m ensurepip --upgrade.
+   * Then: python -m pip install --upgrade pip
+
+
+
 1.  **Download/Clone:**  
     *   Grab the ZIP or clone it:  
         ```bash
@@ -105,19 +113,19 @@ Deploy these heroes to fight for Ethara:
 2.  **Navigate to Folder:**  
     *   Open terminal, then:  
         ```bash
-        cd rise-of-superseed
+        cd Superseed_Rise-of-Superseed_FullRelease-main
         ```
-3.  **Install Requirements:**  
-    *   With env active:  
-        ```bash
+3.  **Install Requirements:**
+    *   ```bash
         pip install pygame
         ```
-4.  **Run the Game:**  
+    *   If pip fails, try pip3 install pygame-ce or python -m pip install pygame-ce.
+5.  **Run the Game:**  
     *   Launch it:  
         ```bash
         python main.py
         ```
-5.  **Enjoy!** Build, fight, conquer.  
+6.  **Enjoy!** Build, fight, conquer.  
 
 ---
 
